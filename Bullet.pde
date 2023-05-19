@@ -1,7 +1,7 @@
 public class Bullet{
-int xb;
-int yb;
-int v;
+public int xb;
+public int yb;
+public int v;
 Bullet(int x, int y, int vel){
   xb = x;
   yb = y;
@@ -11,6 +11,10 @@ ellipse(xb, yb, 20, 20);
 
 public void shoot(){
 yb -= v;
+}
+
+public int getY(){
+return yb;
 }
 
 }

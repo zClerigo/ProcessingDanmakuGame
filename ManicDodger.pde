@@ -1,11 +1,13 @@
 int x, y, xb, yb, speed, focus;
-boolean hit, up, down, left, right, shooting;
-ArrayList<Bullet> pBullets; 
+boolean hit, up, down, left, right, shooting, hasShot;
+ArrayList<Bullet> pBullets = new ArrayList<Bullet>(); 
 void setup(){
 size(800,600);
 background(255,0,0);
 x=width/2;
 y=height/2;
+xb = x;
+yb = y;
 speed = 4;
 focus = 0;
 avatar(100,100);
@@ -51,16 +53,16 @@ void draw(){
   if (y == 80) {
   hit = false;}
 
-  if (keyPressed) {
-    if (key == 'z') {
-      shooting = true;;
-    }
-  }
-  if (!keyPressed) {
-    if (key == 'z') {
-      shooting = false;;
-    }
-  }
+//  if (keyPressed) {
+//    if (key == 'z' || key == 'Z') {
+//      shooting = true;;
+//    }
+//  }
+//  if (!keyPressed) {
+//    if (key == 'z' || key == 'Z') {
+//      shooting = false;;
+//    }
+//  }
   
 if (up == true && left == false && right == false){
   y-= speed - focus; 
@@ -92,10 +94,19 @@ y += sqrt(speed- focus);
 }
 
 if (shooting == true){
-  Bullet bullet = new Bullet(x, y - 3, 3);
-  bullet.shoot();
-  print("sdsd");
+  pBullets.add(new Bullet(xb, yb - 3, 3));  
+  for (int i = 0; i >pBullets.size(); i++){
+  pBullets.get(i).shoot();
+  }
+  hasShot = true;
 }
+
+if (hasShot == true) {
+  for (int i = 0; i >pBullets.size(); i++){
+  pBullets.get(i).yb += 2 ;
+  }
+}
+
 
 
  // resetting();
@@ -120,9 +131,12 @@ else if (keyCode == RIGHT){
 if(keyCode == SHIFT) {
 focus = 2;
 }
-}
-}
 
+if (keyCode == ALT) {
+shooting = true;
+}
+}
+}
 void keyReleased(){
 if(key == CODED){
 
@@ -142,6 +156,9 @@ if (key == 'z') {
 }
 if(keyCode == SHIFT) {
 focus = 0;
+}
+if (keyCode == ALT) {
+shooting = false;
 }
 }
 }
