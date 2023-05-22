@@ -1,5 +1,5 @@
-int x, y, xb, yb, speed, focus;
-boolean hit, up, down, left, right, shooting, hasShot;
+int x, y, xbStart, ybStart, xb, yb, speed, focus, health;
+boolean hit, up, down, left, right, shooting, hasShot, alive;
 ArrayList<Bullet> pBullets = new ArrayList<Bullet>(); 
 void setup(){
 size(800,600);
@@ -38,15 +38,27 @@ ellipse(x,y-40,30,30);
 
 void avatar(int x, int y){
 ellipse(x, y, 20, 20);
+health = 20;
+alive = true;
 }
 
 //void bullet(int xb, int yb, int v) {
 //ellipse(x, y, 20, 20);
 //}
 void draw(){
+  
+  if (health == 0){
+  alive = false;
+  }
+  if(shooting == false){
+  xbStart = x;
+  ybStart = y;
+  }
   background(255,0,0);
   frameRate(60);
+  if(alive == true){
   avatar(x, y);
+  }
   if (y==520) {
   hit = true;
   }
@@ -94,10 +106,14 @@ y += sqrt(speed- focus);
 }
 
 if (shooting == true){
-  pBullets.add(new Bullet(xb, yb - 3, 3));  
-  for (int i = 0; i >pBullets.size(); i++){
-  pBullets.get(i).shoot();
+  if(ybStart < height){
+  new Bullet(xbStart, ybStart - 3, 3);
+   ybStart -= 10;
   }
+  //pBullets.add(new Bullet(xb, yb - 3, 3));  
+  //for (int i = 0; i >pBullets.size(); i++){
+  //pBullets.get(i).shoot();
+  //}
   hasShot = true;
 }
 
