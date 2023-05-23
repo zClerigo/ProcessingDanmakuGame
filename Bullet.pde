@@ -1,15 +1,17 @@
 public class Bullet{
-public int xb;
-public int yb;
-public int v;
-Bullet(int x, int y, int vel){
-  xb = x;
-  yb = y;
-  v = vel;
- color white = color(255,255,255);
-  color black = color(0,0,0);
+public int x, y, v;
 
-// ellipse
+Bullet(Player player){
+  this.x = player.x;
+  this.y = player.y;
+  this.v = -10;
+}
+
+public void drawBullet(){
+
+color white = color(255,255,255);
+color black = color(0,0,0);
+  
 fill(white);
 stroke(white);
 strokeWeight(0);
@@ -25,14 +27,8 @@ ellipse(x,y+4,3,3);
 fill(black);
 ellipse(x,y-4,3,3);
 fill(white);
-}
 
-public void update(){
-yb -= v;
-}
-
-public int getY(){
-return yb;
+y += v;
 }
 
 }

@@ -1,131 +1,53 @@
-int x, y, xbStart, ybStart, xb, yb, speed, focus, health;
-boolean hit, up, down, left, right, shooting, hasShot, alive;
+int xbStart, ybStart, xb, yb;
+boolean shooting, hasShot;
 ArrayList<Bullet> pBullets = new ArrayList<Bullet>(); 
+Player player;
 void setup(){
 size(800,600);
 background(255,0,0);
-x=width/2;
-y=height/2;
-xb = x;
-yb = y;
-speed = 4;
-focus = 0;
-avatar(100,100);
-avatar(300,300);
+hasShot = false;
+player = new Player();
 }
 
-void yinYan(int x, int y){
-  color white = color(255,255,255);
-  color black = color(0,0,0);
 
-// ellipse
-fill(white);
-stroke(white);
-strokeWeight(0);
-ellipse(x,y,160,160);
-fill(black);
-ellipse(x,y+40,80, 80);
-fill(black);
-arc(x, y, 160, 160, 3*PI/2, 2.5*PI);
-fill(white);
-ellipse(x,y-40,80, 80);
-fill(white);
-ellipse(x,y+40,30,30);
-fill(black);
-ellipse(x,y-40,30,30);
-
+void drawBullets(){
+  for(int i = 0; i <pBullets.size(); i ++){
+    pBullets.get(i).drawBullet();
+  }
 }
 
-void avatar(int x, int y){
-ellipse(x, y, 20, 20);
-health = 20;
-alive = true;
-}
-
-//void bullet(int xb, int yb, int v) {
-//ellipse(x, y, 20, 20);
-//}
 void draw(){
-  
-  if (health == 0){
-  alive = false;
-  }
-  if(shooting == false){
-  xbStart = x;
-  ybStart = y;
-  }
+  int m = millis();
   background(255,0,0);
   frameRate(60);
-  if(alive == true){
-  avatar(x, y);
+  drawBullets();
+  if(player.alive == true){
+     player.drawPlayer();
   }
-  if (y==520) {
-  hit = true;
+  if (player.health == 0){
+  player.alive = false;
   }
-  if (y == 80) {
-  hit = false;}
+  if(hasShot == false){
+  xbStart = player.x;
+  ybStart = player.y;
+  }
 
-//  if (keyPressed) {
-//    if (key == 'z' || key == 'Z') {
-//      shooting = true;;
-//    }
-//  }
-//  if (!keyPressed) {
-//    if (key == 'z' || key == 'Z') {
-//      shooting = false;;
-//    }
-//  }
-  
-if (up == true && left == false && right == false){
-  y-= speed - focus; 
-} 
-else if (down == true && left == false && right == false) {
-  y +=speed - focus;
-}
-else if (left == true && up == false && down == false){
-  x -= speed - focus;
-}
-else if (right == true && up == false && down == false){
-  x += speed - focus;
-}
-else if (up == true && left == true){
-x -= sqrt(speed- focus);
-y -= sqrt(speed- focus);
-}
-else if (up == true && right == true){
-x += sqrt(speed- focus);
-y -= sqrt(speed- focus);
-}
-else if (down == true && left == true){
-x -= sqrt(speed- focus);
-y += sqrt(speed- focus);
-}
-else if (down == true && right == true){
-x += sqrt(speed- focus);
-y += sqrt(speed- focus);
-}
 
-if (shooting == true){
-  if(ybStart < height){
-  new Bullet(xbStart, ybStart - 3, 3);
-   ybStart -= 10;
-  }
-  //pBullets.add(new Bullet(xb, yb - 3, 3));  
-  //for (int i = 0; i >pBullets.size(); i++){
-  //pBullets.get(i).shoot();
-  //}
+if (shooting == true) {
+  if (m % 4 ==0 ) {
   hasShot = true;
-}
+  }
+  else if (m % 4 != 0){
+  hasShot = false;
+  }
+} else {hasShot = false;}
 
 if (hasShot == true) {
-  for (int i = 0; i >pBullets.size(); i++){
-  pBullets.get(i).yb += 2 ;
+  if(ybStart < height){
+   Bullet b = new Bullet(player);
+   pBullets.add(b);
   }
 }
-
-
-
- // resetting();
    
 }
 
@@ -133,19 +55,19 @@ void keyPressed(){
 if(key == CODED){
 
 if (keyCode == UP){
-  up = true;
+  player.up = true;
 } 
 else if (keyCode == DOWN) {
-  down = true;}
+  player.down = true;}
 else if (keyCode == LEFT){
-  left = true;
+  player.left = true;
 }
 else if (keyCode == RIGHT){
-  right = true;
+  player.right = true;
 }
 
 if(keyCode == SHIFT) {
-focus = 2;
+player.focus = 2;
 }
 
 if (keyCode == ALT) {
@@ -157,31 +79,25 @@ void keyReleased(){
 if(key == CODED){
 
 if (keyCode == UP){
-  up = false;
+  player.up = false;
 } 
 else if (keyCode == DOWN) {
-  down = false;}
+  player.down = false;}
 else if (keyCode == LEFT){
-  left = false;
+  player.left = false;
 }
 else if (keyCode == RIGHT){
-  right = false;
-}
-if (key == 'z') {
-  shooting = false;
+  player.right = false;
 }
 if(keyCode == SHIFT) {
-focus = 0;
+player.focus = 0;
 }
 if (keyCode == ALT) {
 shooting = false;
 }
 }
 }
-void randomPos(){
- x=(int) random(0,800);
- y= (int)random(0,600);
-}
+
 //void resetting(){
 //  if (hit == true) {
 //  y-=5;}
