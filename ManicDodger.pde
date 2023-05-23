@@ -1,4 +1,3 @@
-int xbStart, ybStart, xb, yb;
 boolean shooting, hasShot;
 ArrayList<Bullet> pBullets = new ArrayList<Bullet>(); 
 Player player;
@@ -27,10 +26,6 @@ void draw(){
   if (player.health == 0){
   player.alive = false;
   }
-  if(hasShot == false){
-  xbStart = player.x;
-  ybStart = player.y;
-  }
 
 
 if (shooting == true) {
@@ -43,10 +38,8 @@ if (shooting == true) {
 } else {hasShot = false;}
 
 if (hasShot == true) {
-  if(ybStart < height){
    Bullet b = new Bullet(player);
    pBullets.add(b);
-  }
 }
    
 }
