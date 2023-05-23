@@ -1,11 +1,13 @@
 boolean shooting, hasShot;
 ArrayList<Bullet> pBullets = new ArrayList<Bullet>(); 
 Player player;
+Turret turrets;
 void setup(){
 size(800,600);
 background(255,0,0);
 hasShot = false;
 player = new Player();
+turrets = new Turret(player);
 }
 
 
@@ -20,6 +22,7 @@ void draw(){
   background(255,0,0);
   frameRate(60);
   drawBullets();
+  turrets.drawTurret();
   if(player.alive == true){
      player.drawPlayer();
   }
@@ -29,10 +32,10 @@ void draw(){
 
 
 if (shooting == true) {
-  if (m % 4 ==0 ) {
+  if (m % 2 == 0 ) {
   hasShot = true;
   }
-  else if (m % 4 != 0){
+  else if (m % 2 != 0){
   hasShot = false;
   }
 } else {hasShot = false;}
