@@ -50,15 +50,15 @@ image(loadImage("catF.png"),x, y );
 }
 } else if (left == true) {
 if (focus == 0){
-image(loadImage("catL.png"),x, y );
-} else {
-image(loadImage("catLF.png"),x, y );
-}
-}else if (right == true) {
-if (focus == 0){
 image(loadImage("catR.png"),x, y );
 } else {
 image(loadImage("catRF.png"),x, y );
+}
+}else if (right == true) {
+if (focus == 0){
+image(loadImage("catL.png"),x, y );
+} else {
+image(loadImage("catLF.png"),x, y );
 }
 }
 

@@ -22,6 +22,7 @@ boss1 = new Boss();
 superBullet = new Bullet(boss1);
 textSize(50);
 textFont(createFont("VT323-Regular.ttf", 50));
+fill(color(244,200,197));
 }
 
 
