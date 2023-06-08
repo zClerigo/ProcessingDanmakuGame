@@ -50,10 +50,13 @@ void drawCbullets(){
 void drawC3bullets(){
   for(int i = 0; i<c3Bullets.size(); i++) {
     c3Bullets.get(i).drawCircleBulletTracker1();
+      if (player.health <= 0){
+      shot = 40;
+      }
    if(shot==40 || boss1.finalMove == true) {
     c3Bullets.get(i).ready = true;
   }
-  }
+   }
 }
 
 void drawAbullets(){
@@ -73,6 +76,8 @@ void drawHealth(){
 }
 
 void draw(){
+  
+  System.out.println(player.health);
     for(int i = 0; i <bBullets.size(); i++){
   if(dist(player.x, player.y, bBullets.get(i).newX, bBullets.get(i).newY) < 32) {
     // COLLISION EVENT
@@ -160,8 +165,19 @@ void draw(){
   text("Shift to Focus",235, 300);
   }
   
+  
+  if (player.health > 0){
   text("BOSS HEALTH:", 10, 30);
   text(boss1.health, 250, 30);
+  } else if (player.health <= 0) {
+    text("GAME OVER", width-500, height/2);
+    text("CTRL TO RESTART", width-560, height/2 + 50);
+  }
+  
+   if (boss1.health <= 0){
+    text("YOU WIN", width-500, height/2);
+    text("CTRL TO RESTART", width-560, height/2 + 50);
+  }
   
   //superBullet.updateCoords(boss1);
   boss1.drawBoss();
@@ -173,7 +189,7 @@ void draw(){
   drawHealth();
   
   // BOSS 1
-  if (pressed == true){
+  if (pressed == true && player.health > 0){
     
   if(boss1.ready1 == true){
     superBullet.drawCircleBullet();
@@ -241,6 +257,23 @@ void keyPressed(){
   pressed = true;
 if(key == CODED){
 
+if (keyCode == CONTROL) {
+  if (player.health <= 0 || boss1.health <= 0){
+  player.health = 3;
+  player.alive = true;
+  boss1.health = 30000;
+  boss1.x = width/2;
+  boss1.y = height - 530;
+  boss1.movePattern = 0;
+  boss1Attack = 1;
+  set = true;
+  boss1.finished = false;
+  boss1.ready1 = false;
+  boss1.ready2 = false;
+  boss1.movement = false;
+  boss1.finalMove = false;
+  }
+}
 if (keyCode == UP){
   player.up = true;
 } 

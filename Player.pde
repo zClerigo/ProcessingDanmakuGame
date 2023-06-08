@@ -6,7 +6,7 @@ Player() {
 imageMode(CENTER);
 this.x = width / 2;
 this.y = height - 200;
-health = 9999;
+health = 3;
 alive = true;
 focus = 0;
 speed = 4;
